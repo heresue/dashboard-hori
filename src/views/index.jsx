@@ -1,8 +1,33 @@
-import Layout from "../components/Layout";
+import Title, { TitleH4 } from "../components/common/Title";
+import { Section } from "../components/layout/Container";
+import Layout from "../components/layout/Layout";
 
 const Home = () => {
-  return <Layout title="home">메인 컨텐츠</Layout>;
+  return (
+    <Layout title="home">
+      <Section>
+        <Title>회사 소개</Title>
+        <TitleH4>사장님 말씀</TitleH4>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quibusdam
+        facilis aut earum illo totam, reiciendis maiores beatae natus ut vitae
+        suscipit cumque! Vitae in natus tempore eaque tempora unde?
+        <TitleH4>회사 연혁</TitleH4>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta nulla
+        fuga quas amet autem, consectetur molestias voluptate, nemo quo deleniti
+        mollitia at officia voluptatibus neque adipisci, sit magnam quisquam
+        eius?
+      </Section>
+      <Section>
+        <Title>회사 비전</Title>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit vel
+        sapiente fugit, perspiciatis laudantium sunt? Praesentium consequatur
+        reprehenderit vitae quidem sint, quibusdam facere ad a? Ullam molestiae
+        deserunt fuga molestias.
+      </Section>
+    </Layout>
+  );
 };
+// sass 쓸거 아니니까 클래스이름x 컴포넌트로.
 
 export default Home;
 

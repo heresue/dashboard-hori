@@ -13,6 +13,7 @@ const routeArr = [
   {
     path: "/",
     element: <Home />,
+    // background: red,
   },
   {
     path: "/marketplace",
