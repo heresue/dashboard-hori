@@ -1,15 +1,15 @@
-import { SearchIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   ButtonGroup,
-  Container,
+  Button,
   Heading,
   IconButton,
-  background,
 } from "@chakra-ui/react";
+import { SearchIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerLg from "./Container";
+import { lighten } from "polished";
 // react-router-dom의 Link를 써야한다 (chakra X) 리액트 라우터 돔으로 쓰고 있는중이니까.
 
 //* 컴포넌트에 스타일 넣기(Container) *//
@@ -33,9 +33,9 @@ const Header = () => {
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <Heading fontSize={24} color={"brand.100"}>
+          <Logo fontSize={24}>
             <Link to="/">Dashboard</Link>
-          </Heading>
+          </Logo>
           <Nav>
             {/* <nav style={{ height: '100%'}}> 
             일반으로 넣을 때 이렇게 인라인 형식으로 쓰면 좋지않음
@@ -58,7 +58,7 @@ const Header = () => {
               </li>
             </NavList>
           </Nav>
-          <IconBtnGroup>
+          {/* <IconBtnGroup>
             <IconButton
               // variant="ghost"
               // bg={'transparent'}
@@ -71,7 +71,11 @@ const Header = () => {
               aria-label="light database"
               icon={<SunIcon />}
             />
-          </IconBtnGroup>
+          </IconBtnGroup> */}
+          <ButtonGroup bg={{ sm: "blue", md: "red", lg: "yellow" }}>
+            <IconButton aria-label="Search database" icon={<SearchIcon />} />
+            <IconButton aria-label="Light database" icon={<SunIcon />} />
+          </ButtonGroup>
         </Box>
       </ContainerLg>
     </Box>
@@ -91,12 +95,22 @@ const Header = () => {
 
 //// styled component 적용하기 ////
 
-//* 컴포넌트에 적용 *// const 변수이름 = styled(컴포넌트 이름)` 속성: 값;` //
-const IconBtnGroup = styled(ButtonGroup)`
-  button {
-    background: lightcoral;
-  }
+const Logo = styled(Heading)`
+  font-size: 2px;
+  color: ${({ theme }) => theme.colors.brand[500]};
+  background-color: ${({theme}) => lighten(0.2, theme.colors.brand[400])};
 `;
+// color: ${(props) => props.theme.colors.brand[500]}; 를 구조분해해서 적용
+// color: ${({ theme }) => theme.colors.brand[500]};
+// background-color: ${(props) => lighten(0.2, props.theme.colors.brand[400])};
+
+
+//* 컴포넌트에 적용 *// const 변수이름 = styled(컴포넌트 이름)` 속성: 값;` //
+// const IconBtnGroup = styled(ButtonGroup)`
+//   button {
+//     background: lightcoral;
+//   }
+// `;
 // IconButton으로 잡으려고 했으나, 우선순위에 밀려서 적용안됨.
 // >> 부모를 잡고 그 밑에 button으로 해서 우선순위 점수를 더부여해줌
 
