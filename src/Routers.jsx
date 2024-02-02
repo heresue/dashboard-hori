@@ -3,11 +3,11 @@
 // 파일명도 routes, routers 등 다를 수 있음
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./views";
-import Marketplace from "./views/Marketplace";
-import DataTables from "./views/DataTables";
-import Profile from "./views/Profile";
-import SignIn from "./views/SignIn";
+import Home from "./views/home/Home";
+import Marketplace from "./views/marketplace/Marketplace";
+import DataTables from "./views/datatables/DataTables";
+import Profile from "./views/profile/Profile";
+import SignIn from "./views/signin/SignIn";
 
 const routeArr = [
   {
@@ -38,9 +38,9 @@ const Routers = () => {
     <>
       <BrowserRouter>
         <Routes>
-            {routeArr.map((item, index) => (
-                <Route key={index} path={item.path} element={item.element} />
-            ))}
+          {routeArr.map((item, index) => (
+            <Route key={index} path={item.path} element={item.element} />
+          ))}
         </Routes>
         {/* route: 리액트의 페이지 이동을 도와주는 라이브러리 */}
         {/* 페이지마다 설정을 다 다르게 해줄 수 있음 */}

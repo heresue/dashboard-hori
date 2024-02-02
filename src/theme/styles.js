@@ -1,5 +1,11 @@
+// global style 정의
+
 import { mode } from "@chakra-ui/theme-tools";
 import { lighten } from "polished";
+
+const variables = {
+  $maxW: "1280px",
+};
 
 export const globalStyles = {
   colors: {
@@ -83,24 +89,31 @@ export const globalStyles = {
     gray: {
       100: "#FAFCFE",
     },
-    white: '$fff',
+    white: "#FFF",
   },
   styles: {
     global: (props) => ({
       body: {
-        overflowX: "hidden",
+        // overflowX: "hidden",
+        minW: '320px',
         bg: mode("white", "navy.900")(props),
-        fontFamily: "Noto Sans KR", "DM Sans",
+        fontFamily: '"Noto Sans KR", "sans-serif"',
         letterSpacing: "-0.5px",
         fontSize: "16px",
-        lineHeight: "1.5px",
+        lineHeight: "1.5",
         color: mode("gray.900", "white")(props),
       },
       input: {
         color: "gray.700",
       },
       html: {
-        fontFamily: "Noto Sans KR", "DM Sans",
+        fontFamily: '"Noto Sans KR", "sans-serif"',
+      },
+      'ul > li': {
+          listStyle: "none",
+      },
+      ".chakra-container": {
+        maxWidth: "calc(1280px + var(--chakra-space-4) * 2) !important",
       },
     }),
   },

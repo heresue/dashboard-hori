@@ -4,12 +4,13 @@ import {
   Button,
   Heading,
   IconButton,
+  Container,
 } from "@chakra-ui/react";
-import { SearchIcon, SunIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, SearchIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ContainerLg from "./Container";
 import { lighten } from "polished";
+import Gnb from "./Gnb";
 // react-router-dom의 Link를 써야한다 (chakra X) 리액트 라우터 돔으로 쓰고 있는중이니까.
 
 //* 컴포넌트에 스타일 넣기(Container) *//
@@ -22,62 +23,80 @@ import { lighten } from "polished";
 
 const Header = () => {
   return (
-    <Box as="header" borderBottom={"1px solid gray"}>
-      {/* border bottom만 넣고싶다면? 카멜표기법으로! */}
-      {/* 만약 변수설정한 값으로 쓰고싶다면? 괄호빼서 따로 써주기
-            borderbottom={'3px soild'} borderColor={$red}  */}
-      <ContainerLg>
-        <Box
-          display={["block", null, "flex"]}
-          h={100}
+    <Box
+      as="header"
+      position={"fixed"}
+      top={0}
+      left={0}
+      right={0}
+      zIndex={1000}
+      bg="rgba(0,0,0,.1)"
+      backdropFilter={"saturate(180%) blur(15px)"}
+    >
+      {/* tab */}
+      <Box
+        display={["none", null, null, null, "block"]}
+        h={"32px"}
+        bg={"rgba(0,0,0,.6)"}
+      >
+        <Container
+          display="flex"
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <ButtonGroup gap={"10px"}>
+            <Button colorScheme="teal" variant="link12">
+              공공 기관용
+            </Button>
+            <Button colorScheme="teal" variant="link12">
+              금융 클라우드
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup gap={"10px"}>
+            <Button colorScheme="teal" variant="link12">
+              로그인
+            </Button>
+            <Button colorScheme="teal" variant="link12">
+              회원가입
+            </Button>
+            <Button colorScheme="teal" variant="link12">
+              Languages
+            </Button>
+          </ButtonGroup>
+        </Container>
+      </Box>
+      {/* header */}
+      <Box bg={"rgba(0,0,0,.05)"}>
+        <Container
+          display={["flex"]}
+          h={'60px'}
           alignItems={"center"}
           justifyContent={"space-between"}
         >
-          <Logo fontSize={24}>
+          <Heading as={"h1"} fontSize={24}>
             <Link to="/">Dashboard</Link>
-          </Logo>
-          <Nav>
-            {/* <nav style={{ height: '100%'}}> 
-            일반으로 넣을 때 이렇게 인라인 형식으로 쓰면 좋지않음
-              >> styled component 사용(+프라이머(리액트기반))*/}
-            <NavList>
-              <li>
-                <Link to="/">Main Dashboard</Link>
-              </li>
-              <li>
-                <Link to="/marketplace">NFT Marketplace</Link>
-              </li>
-              <li>
-                <Link to="/datatables">Data Tables</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/signin">Sign In</Link>
-              </li>
-            </NavList>
-          </Nav>
-          {/* <IconBtnGroup>
+          </Heading>
+
+          <Gnb />
+          <ButtonGroup bg={{ sm: "blue", md: "red", lg: "yellow" }}>
             <IconButton
-              // variant="ghost"
-              // bg={'transparent'}
+              variant="ghost"
               aria-label="Search database"
               icon={<SearchIcon />}
             />
             <IconButton
-              // variant="ghost"
-              // bg={'transparent'}
-              aria-label="light database"
+              variant="ghost"
+              aria-label="Light database"
               icon={<SunIcon />}
             />
-          </IconBtnGroup> */}
-          <ButtonGroup bg={{ sm: "blue", md: "red", lg: "yellow" }}>
-            <IconButton aria-label="Search database" icon={<SearchIcon />} />
-            <IconButton aria-label="Light database" icon={<SunIcon />} />
+            <IconButton
+              variant="ghost"
+              aria-label="전체 메뉴"
+              icon={<HamburgerIcon display={{ sm: "block", lg: "none" }} />}
+            />
           </ButtonGroup>
-        </Box>
-      </ContainerLg>
+        </Container>
+      </Box>
     </Box>
   );
 };
@@ -98,12 +117,11 @@ const Header = () => {
 const Logo = styled(Heading)`
   font-size: 2px;
   color: ${({ theme }) => theme.colors.brand[500]};
-  background-color: ${({theme}) => lighten(0.2, theme.colors.brand[400])};
+  background-color: ${({ theme }) => lighten(0.2, theme.colors.brand[400])};
 `;
 // color: ${(props) => props.theme.colors.brand[500]}; 를 구조분해해서 적용
 // color: ${({ theme }) => theme.colors.brand[500]};
 // background-color: ${(props) => lighten(0.2, props.theme.colors.brand[400])};
-
 
 //* 컴포넌트에 적용 *// const 변수이름 = styled(컴포넌트 이름)` 속성: 값;` //
 // const IconBtnGroup = styled(ButtonGroup)`

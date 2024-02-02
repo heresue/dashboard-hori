@@ -15,19 +15,25 @@ export const buttonStyles = {
         },
       },
       variants: {
-        cancel: () => ({
-          bg: 'red',
+        link12: () => ({
+          height: "32px",
+          fontSize: "12px",
+          color: "white",
+   
+          // gird 맞추기 위해 패딩값 빼줌
+          "padding-inline-start": "0",
+          "padding-inline-end": "0",
         }),
         outline: () => ({
-          borderRadius: "16px",
-          bg: ['red', 'brand.200', 'brand.900', 'white'],
+          borderRadius: "0",
+          bg: ["red", "brand.200", "brand.900", "white"],
           // color: ['white', null, null, 'brand.500'],
-          color: {sm: 'white', lg: 'brand.500'}
+          color: { sm: "white", lg: "brand.500" },
           // 중간에 생략되는 경우는 , 넣어주고 뒤쪽은 상관없다.
         }),
         brand: (props) => ({
           bg: mode("brand.500", "brand.400")(props),
-          color: "white",
+          color: "yellow.500",
           _focus: {
             bg: mode("brand.500", "brand.400")(props),
           },
