@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { lighten } from "polished";
 import Gnb from "./Gnb";
+import gsap from "gsap";
 // react-router-dom의 Link를 써야한다 (chakra X) 리액트 라우터 돔으로 쓰고 있는중이니까.
 
 //* 컴포넌트에 스타일 넣기(Container) *//
@@ -22,9 +23,46 @@ import Gnb from "./Gnb";
 //<h1 style={{ width: "50px", height: "100%" }}><a href="/">Dashboard</a></h1>
 
 const Header = () => {
+  // 컴포넌트 안에서 실행되는 코드들은 안쪽에 넣어주기
+  // 스크롤 이벤트 핸들러 함수
+  const handleScroll = () => {
+    const scrollY = window.scrollY; // 현재 스크롤 위치
+    const hd = document.querySelector("#header"); // 헤더
+    const navBelt = document.querySelector(".nav-belt__wrapper"); // 헤더
+    const navBar = document.querySelector(".nav-bar__wrapper"); // 헤더
+    const hdHeight = hd.offsetHeight; // 헤더 높이
+    // const swiperHeight = document.querySelector(".main-slide").offsetHeight; // 슬라이드 높이
+    const swiperHeight = document.querySelector('.topCont')?.offsetHeight || 0; // 슬라이드 높이 (or연산자를 이용해서, swiperHeight가 없으면 0을 넣어준다.)
+
+    console.log(scrollY);
+    console.log(swiperHeight - hdHeight);
+
+    // if: 100px 이상 스크롤 되면 헤더에 배경색을 입힌다.
+    if (scrollY >= swiperHeight - hdHeight) {
+      // gsap.to(요소, {옵션})
+      gsap.to(navBar, { backgroundColor: "#fff", duration: 0.5 });
+      gsap.to(navBelt, { backgroundColor: "#f6f7f8", duration: 0.5 });
+
+      gsap.to(navBelt.querySelectorAll("button"), {
+        color: "#000",
+        duration: 0.5,
+      });
+    } else {
+      // else : 100px 이하로 스크롤 되면 배경색을 없앤다.
+      gsap.to(navBar, { backgroundColor: "", duration: 0.5 });
+      gsap.to(navBelt, { backgroundColor: "", duration: 0.5 });
+    }
+  };
+  // 이벤트 리스너 등록 (위에 만든 함수 사용)
+  // 실행문이기 때문에, 위 선언문 안에 넣으면 안된다!
+  window.addEventListener("scroll", handleScroll);
+  // 윈도우가 'scroll' 이벤트가 발생되는지 보다가 발생되면 handleScroll 함수를 실행해라
+
+
   return (
     <Box
       as="header"
+      id="header"
       position={"fixed"}
       top={0}
       left={0}
@@ -33,8 +71,9 @@ const Header = () => {
       bg="rgba(0,0,0,.1)"
       backdropFilter={"saturate(180%) blur(15px)"}
     >
-      {/* tab */}
+      {/* tnb */}
       <Box
+        className="nav-belt__wrapper"
         display={["none", null, null, null, "block"]}
         h={"32px"}
         bg={"rgba(0,0,0,.6)"}
@@ -66,19 +105,20 @@ const Header = () => {
         </Container>
       </Box>
       {/* header */}
-      <Box bg={"rgba(0,0,0,.05)"}>
+      <Box className="nav-bar__wrapper" bg={"rgba(0,0,0,.05)"}>
         <Container
           display={["flex"]}
-          h={'60px'}
+          h={"60px"}
           alignItems={"center"}
           justifyContent={"space-between"}
+          
         >
           <Heading as={"h1"} fontSize={24}>
             <Link to="/">Dashboard</Link>
           </Heading>
 
           <Gnb />
-          <ButtonGroup bg={{ sm: "blue", md: "red", lg: "yellow" }}>
+          <ButtonGroup>
             <IconButton
               variant="ghost"
               aria-label="Search database"
