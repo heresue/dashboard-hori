@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { lighten } from "polished";
 import Gnb from "./Gnb";
 import gsap from "gsap";
+import React, { useEffect, useState } from "react";
 // react-router-dom의 Link를 써야한다 (chakra X) 리액트 라우터 돔으로 쓰고 있는중이니까.
 
 //* 컴포넌트에 스타일 넣기(Container) *//
@@ -24,6 +25,30 @@ import gsap from "gsap";
 
 const Header = () => {
   // 컴포넌트 안에서 실행되는 코드들은 안쪽에 넣어주기
+  const [isScroll, setIsScroll] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navBeltHeight =
+        document.querySelector(".nav-belt__wrapper")?.offsetHeight || 0;
+      const scrollPosition =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollPosition > navBeltHeight) {
+        document.getElementById("header").style.top = "-32px";
+        document.querySelector(".nav-bar__wrapper").style.position = "fixed";
+        document.querySelector(".nav-bar__wrapper").style.width = "100%";
+      } else {
+        document.getElementById("header").style.top = -scrollPosition + "px";
+        setIsScroll(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  
   // 스크롤 이벤트 핸들러 함수
   const handleScroll = () => {
     const scrollY = window.scrollY; // 현재 스크롤 위치
@@ -32,18 +57,22 @@ const Header = () => {
     const navBar = document.querySelector(".nav-bar__wrapper"); // 헤더
     const hdHeight = hd.offsetHeight; // 헤더 높이
     // const swiperHeight = document.querySelector(".main-slide").offsetHeight; // 슬라이드 높이
-    const swiperHeight = document.querySelector('.topCont')?.offsetHeight || 0; // 슬라이드 높이 (or연산자를 이용해서, swiperHeight가 없으면 0을 넣어준다.)
-
-    console.log(scrollY);
-    console.log(swiperHeight - hdHeight);
+    const swiperHeight = document.querySelector(".topCont")?.offsetHeight || 0; // 슬라이드 높이 (or연산자를 이용해서, swiperHeight가 없으면 0을 넣어준다.)
 
     // if: 100px 이상 스크롤 되면 헤더에 배경색을 입힌다.
     if (scrollY >= swiperHeight - hdHeight) {
       // gsap.to(요소, {옵션})
-      gsap.to(navBar, { backgroundColor: "#fff", duration: 0.5 });
-      gsap.to(navBelt, { backgroundColor: "#f6f7f8", duration: 0.5 });
+      gsap.to(navBar, {
+        backgroundColor: "#fff",
+        boxShadow: "0 1px 4px 0 rgba(0,0,0,.07)",
+        duration: 0.5,
+      });
 
       gsap.to(navBelt.querySelectorAll("button"), {
+        color: "#000",
+        duration: 0.5,
+      });
+      gsap.to(navBar.querySelectorAll("button, a"), {
         color: "#000",
         duration: 0.5,
       });
@@ -53,11 +82,11 @@ const Header = () => {
       gsap.to(navBelt, { backgroundColor: "", duration: 0.5 });
     }
   };
+
   // 이벤트 리스너 등록 (위에 만든 함수 사용)
   // 실행문이기 때문에, 위 선언문 안에 넣으면 안된다!
   window.addEventListener("scroll", handleScroll);
   // 윈도우가 'scroll' 이벤트가 발생되는지 보다가 발생되면 handleScroll 함수를 실행해라
-
 
   return (
     <Box
@@ -68,8 +97,9 @@ const Header = () => {
       left={0}
       right={0}
       zIndex={1000}
-      bg="rgba(0,0,0,.1)"
-      backdropFilter={"saturate(180%) blur(15px)"}
+      minH={"92px"}
+      bg={isScroll ? "rgba(0,0,0,.1)" : "transparent"}
+      backdropFilter={isScroll ? "saturate(180%) blur(15px)" : "none"}
     >
       {/* tnb */}
       <Box
@@ -111,28 +141,31 @@ const Header = () => {
           h={"60px"}
           alignItems={"center"}
           justifyContent={"space-between"}
-          
         >
-          <Heading as={"h1"} fontSize={24}>
+          <Heading as={"h1"} fontSize={24} color={"white"}>
             <Link to="/">Dashboard</Link>
           </Heading>
 
           <Gnb />
-          <ButtonGroup>
+          <ButtonGroup color={"white"}>
             <IconButton
               variant="ghost"
               aria-label="Search database"
               icon={<SearchIcon />}
+              color={"white"}
             />
             <IconButton
               variant="ghost"
               aria-label="Light database"
               icon={<SunIcon />}
+              color={"white"}
             />
             <IconButton
               variant="ghost"
               aria-label="전체 메뉴"
-              icon={<HamburgerIcon display={{ sm: "block", lg: "none" }} />}
+              icon={<HamburgerIcon />}
+              display={{ sm: "block", lg: "none" }}
+              color={"white"}
             />
           </ButtonGroup>
         </Container>

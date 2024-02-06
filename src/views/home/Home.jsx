@@ -6,16 +6,10 @@ import MainSlide from "./components/MainSlide";
 
 const Home = () => {
   return (
-    <Layout title="home" showTitle={false}>
+    <>
       <MainSlide />
       <Section isLightBackground={true}>
         <Container>
-          <ButtonGroup spacing="6">
-            <Button variant="outline" colorScheme="blue">
-              Save
-            </Button>
-            <Button variant="outline">Cancel</Button>
-          </ButtonGroup>
           <Title>회사 소개</Title>
           <TitleH4>사장님 말씀</TitleH4>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quibusdam
@@ -38,7 +32,7 @@ const Home = () => {
           molestiae deserunt fuga molestias.
         </Container>
       </Section>
-    </Layout>
+    </>
   );
 };
 // sass 쓸거 아니니까 클래스이름x 컴포넌트로.
